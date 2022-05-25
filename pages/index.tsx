@@ -3,9 +3,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+import FilterButton  from './../src/components/atoms/filterButton';
 import { Header } from './../src/components/organisms/header';
 import StyledMainTitle  from './../styles/title';
 import StyledMainContainer from './../styles/main';
+import { StyledFilterButtonContainer } from '../src/components/atoms/filterButton/styles';
 
 const Home: NextPage = () => {
   return (
@@ -21,6 +23,16 @@ const Home: NextPage = () => {
         <StyledMainTitle>
             Milhões de filmes, séries e pessoas para descobrir. Explore já.
         </StyledMainTitle>
+
+        <StyledFilterButtonContainer>
+          <FilterButton title="Ação" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
+          <FilterButton title="Aventura" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
+          {/* <FilterButton title="Animação" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
+          <FilterButton title="Comédia" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
+          <FilterButton title="Crime" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/> */}
+          {/* <FilterButton title="Documentário" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/> */}
+        </StyledFilterButtonContainer>
+       
       </StyledMainContainer>
 
       <footer className={styles.footer}>
