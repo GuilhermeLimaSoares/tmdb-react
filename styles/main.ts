@@ -5,6 +5,9 @@ const StyledMainContainer = styled.main`
     padding: 40px 16px;
 
     @media(min-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 40px;
     }
 `;
