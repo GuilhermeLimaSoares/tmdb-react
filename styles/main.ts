@@ -12,4 +12,13 @@ const StyledMainContainer = styled.main`
     }
 `;
 
+export const StyledBannerSectionContainer = styled.section`
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    row-gap: 32px;
+    padding: 29px 16px;
+    // background: #E5E5E5;
+`
+
 export default StyledMainContainer;

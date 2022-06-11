@@ -1,15 +1,39 @@
 import type { NextPage } from 'next'
+import {useMemo, useState} from 'react';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import axios from 'axios';
+
+import {UpcomingMovie} from './../types/upcomingMovie';
 
 import FilterButton  from './../src/components/atoms/filterButton';
+import {BannerImage} from './../src/components/molecules/bannerImage';
 import { Header } from './../src/components/organisms/header';
 import StyledMainTitle  from './../styles/title';
-import StyledMainContainer from './../styles/main';
+import StyledMainContainer, {StyledBannerSectionContainer} from './../styles/main';
 import { StyledFilterButtonContainer } from '../src/components/atoms/filterButton/styles';
 
+async function getGenre(api: string, setGenre: Function){
+  const {data} = await axios.get(`${api}?api_key=${process.env.NEXT_PUBLIC_API_KEY}`); 
+  setGenre(data)
+}
+
 const Home: NextPage = () => {
+  const [upcomingMoviesList, setUpcomingMoviesList] = useState([]);
+   useMemo(async() => {
+    const {data} = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.NEXT_PUBLIC_API_KEY}`); 
+    
+    // console.log(data);
+    setUpcomingMoviesList(data.results);
+    // debugger;
+    // console.log(process.env.NEXT_PUBLIC_AP_URL);
+    // console.log(process.env.PUBLIC_API_URL)
+    // console.log(env.PUBLIC_IMG_URL);
+    // console.log('The value of PORT .is:', process.env.PORT);
+    // debugger;
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -27,13 +51,16 @@ const Home: NextPage = () => {
         <StyledFilterButtonContainer>
           <FilterButton title="Ação" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
           <FilterButton title="Aventura" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
-          {/* <FilterButton title="Animação" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
-          <FilterButton title="Comédia" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/>
-          <FilterButton title="Crime" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/> */}
-          {/* <FilterButton title="Documentário" imgUrl="https://cdn-icons-png.flaticon.com/512/174/174855.png"/> */}
         </StyledFilterButtonContainer>
        
       </StyledMainContainer>
+      <StyledBannerSectionContainer>
+        { upcomingMoviesList && 
+            upcomingMoviesList
+              .map((upcomingMovie: UpcomingMovie) => 
+                <BannerImage key={`banner-image-${upcomingMovie.id}`} altImageBanner='teste' imgUrlBanner={`${process.env.NEXT_PUBLIC_IMG_URL}${upcomingMovie?.poster_path}`} titleBanner={upcomingMovie?.title} dateBanner={upcomingMovie?.release_date}/>)
+        }
+      </StyledBannerSectionContainer>
 
       <footer className={styles.footer}>
         <a
